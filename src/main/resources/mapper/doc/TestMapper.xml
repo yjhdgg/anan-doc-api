@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anan.document.modules.doc.mapper.TestMapper">
+
+    <resultMap id="BaseResultMap" type="com.anan.document.modules.doc.entity.Test">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="trustee" column="trustee" jdbcType="VARCHAR"/>
+            <result property="docType" column="docType" jdbcType="VARCHAR"/>
+            <result property="ticketNum" column="ticketNum" jdbcType="VARCHAR"/>
+            <result property="prodNum" column="prodNum" jdbcType="VARCHAR"/>
+            <result property="chipModel" column="chipModel" jdbcType="VARCHAR"/>
+            <result property="smdGlue" column="smdGlue" jdbcType="VARCHAR"/>
+            <result property="zd" column="zd" jdbcType="VARCHAR"/>
+            <result property="wireRod" column="wireRod" jdbcType="VARCHAR"/>
+            <result property="encapsulation" column="encapsulation" jdbcType="VARCHAR"/>
+            <result property="damGlue" column="damGlue" jdbcType="VARCHAR"/>
+            <result property="objective" column="objective" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="completion" column="completion" jdbcType="VARCHAR"/>
+            <result property="fileUrl" column="fileUrl" jdbcType="VARCHAR"/>
+            <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,trustee,docType,
+        ticketNum,prodNum,chipModel,
+        smdGlue,zd,wireRod,
+        encapsulation,damGlue,objective,
+        content,completion,fileUrl,
+        remarks
+    </sql>
+    <select id="myPage" resultMap="BaseResultMap">
+        select * from test limit #{current},#{size} ;
+    </select>
+
+</mapper>

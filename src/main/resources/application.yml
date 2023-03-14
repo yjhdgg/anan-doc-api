@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: anan-document-api
+  profiles:
+      active: prod
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 8101

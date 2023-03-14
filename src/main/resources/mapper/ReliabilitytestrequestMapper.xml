@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anan.document.modules.doc.mapper.ReliabilitytestrequestMapper">
+
+    <resultMap id="BaseResultMap" type="com.anan.document.modules.doc.entity.Reliabilitytestrequest">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="principal" column="principal" jdbcType="VARCHAR"/>
+            <result property="workshop" column="workshop" jdbcType="VARCHAR"/>
+            <result property="ordernum" column="orderNum" jdbcType="VARCHAR"/>
+            <result property="lotnum" column="lotNum" jdbcType="VARCHAR"/>
+            <result property="chipmodel" column="chipModel" jdbcType="VARCHAR"/>
+            <result property="experimenttype" column="experimentType" jdbcType="VARCHAR"/>
+            <result property="experimentlevel" column="experimentLevel" jdbcType="VARCHAR"/>
+            <result property="humiditysensitivitylevel" column="humiditySensitivityLevel" jdbcType="VARCHAR"/>
+            <result property="heraeus" column="heraeus" jdbcType="VARCHAR"/>
+            <result property="carrierframe" column="carrierFrame" jdbcType="VARCHAR"/>
+            <result property="dammingglue" column="dammingGlue" jdbcType="VARCHAR"/>
+            <result property="wirerod" column="wireRod" jdbcType="VARCHAR"/>
+            <result property="suliaofengjiao" column="suLiaoFengJiao" jdbcType="VARCHAR"/>
+            <result property="objective" column="objective" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="completion" column="completion" jdbcType="VARCHAR"/>
+            <result property="fileurl" column="fileUrl" jdbcType="VARCHAR"/>
+            <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+            <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,principal,workshop,
+        orderNum,lotNum,chipModel,
+        experimentType,experimentLevel,humiditySensitivityLevel,
+        heraeus,carrierFrame,dammingGlue,
+        wireRod,suLiaoFengJiao,objective,
+        content,completion,fileUrl,
+        remarks,createTime
+    </sql>
+</mapper>

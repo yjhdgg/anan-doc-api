@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anan.document.modules.doc.mapper.TDocumentInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.anan.document.modules.doc.dto.TDocumentInfoDTO">
+        <id column="id" property="id"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="title" property="title"/>
+        <result column="file_type" property="fileType"/>
+        <result column="doc_type" property="docType"/>
+        <result column="status" property="status"/>
+        <result column="file_url" property="fileUrl"/>
+        <result column="view_url" property="viewUrl"/>
+        <result column="failure_reason" property="failureReason"/>
+        <result column="download_power" property="downloadPower"/>
+        <result column="view_power" property="viewPower"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="download_count" property="downloadCount"/>
+        <result column="remarks" property="remarks"/>
+        <result column="cover" property="cover"/>
+        <result column="expire_time" property="expireTime"/>
+        <result column="file_code" property="fileCode"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="equip_num" property="equipNum"/>
+        <result column="equip_name" property="equipName"/>
+        <result column="equip_type" property="equipType"/>
+        <result column="use_depart" property="useDepart"/>
+        <result column="effective_date" property="effectiveDate"/>
+        <result column="ex_factory_num" property="exFactoryNum"/>
+        <result column="check_date" property="checkDate"/>
+        <result column="manufacturer" property="manufacturer"/>
+        <result column="measure_range" property="measureRange"/>
+        <result column="file_format" property="fileFormat"/>
+        <result column="one_type" property="oneType"/>
+        <result column="view_auth_id" property="viewAuthId"/>
+        <result column="reminder_time" property="reminderTime"/>
+        <result column="is_send" property="isSend"/>
+        <result column="running_date" property="runningDate"/>
+        <result column="objective" property="objective"/>
+        <result column="content" property="content"/>
+        <result column="completion" property="completion"/>
+        <result column="state" property="state"/>
+        <result column="accuracy" property="accuracy"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        `id`
+        ,`create_by`,`update_by`,`create_time`,`update_time`,`title`,`file_type`,`doc_type`,`status`,
+            `file_url`,`view_url`,`failure_reason`,`download_power`,`view_power`,`view_count`,`download_count`,
+            `remarks`,cover,'expire_time','file_code','customer_name','equip_num','equip_name','equip_type','use_depart','effective_date',
+            'effective_date','check_date','manufacturer','measure_range','file_format','one_type','view_auth_id','reminder_time',
+            'is_send','running_date','objective','content','completion','state','accuracy'
+    </sql>
+    <update id="updateStatus">
+        update t_document_info
+        set state = #{state}
+        <if test="null != failureReason and failureReason!=''">
+            ,failure_reason = #{failureReason}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="paging1" resultMap="BaseResultMap">
+        SELECT a.*,u.real_name as "createByName" FROM t_document_info
+        a left join sys_dic_value t on a.doc_type = t.id
+        left join sys_user u on u.id = a.create_by
+        <where>
+            <if test="query!=null">
+                <!--                <if test="query.title!=null and query.title!=''">-->
+                <!--                    AND a.title  LIKE '%${query.title}%'-->
+                <!--                </if>-->
+                <if test="query.title!=null and query.title!=''">
+                    AND a.file_code LIKE '%${query.title}%'
+                </if>
+                <!--                <if test="query.createBy!=null and query.createBy!=''">-->
+                <!--                    AND a.create_by = #{query.createBy}-->
+                <!--                </if>-->
+                <if test="query.status!=null and query.status!=''">
+                    AND a.status = #{query.status}
+                </if>
+                <if test="query.docType!=null and query.docType!=''">
+                    AND (FIND_IN_SET(#{query.docType},t.parent_ids) or a.doc_type = #{query.docType})
+                </if>
+                <if test="query.deptCode!=null and query.deptCode!=''">
+                    AND a.dept_code =#{query.deptCode}
+                </if>
+            </if>
+        </where>
+    </select>
+    <select id="paging" resultMap="BaseResultMap">
+        SELECT * FROM t_document_info
+        <where>
+            <if test="query!=null">
+                <if test="query.title!=null and query.title!=''">
+                    AND (t_document_info.file_code LIKE '%${query.title}%' or t_document_info.title LIKE
+                    '%${query.title}%' or t_document_info.customer_name LIKE '%${query.title}%')
+                </if>
+                <if test="query.status!=null and query.status!=''">
+                    AND t_document_info.status = #{query.status}
+                </if>
+                <if test="query.docType!=null and query.docType !=''">
+                    AND t_document_info.doc_type =#{query.docType}
+                </if>
+                <if test="query.oneType!=null and query.oneType !=''">
+                    AND (t_document_info.one_type = #{query.oneType} or t_document_info.one_type =1)
+                </if>
+            </if>
+        </where>
+
+        order by file_code asc
+    </select>
+    <select id="pagingJi" resultMap="BaseResultMap">
+        select * from t_document_info
+        <where>
+            <if test="query!=null">
+                <if test="query.title!=null and query.title!=''">
+                    AND (t_document_info.equip_name LIKE '%${query.title}%' or t_document_info.equip_num LIKE
+                    '%${query.title}%')
+                </if>
+                <if test="query.docType!=null and query.docType !=''">
+                    AND t_document_info.doc_type = #{query.docType}
+                </if>
+            </if>
+        </where>
+
+    </select>
+    <select id="pageIntegrated" resultMap="BaseResultMap">
+        SELECT *
+        FROM t_document_info
+        where doc_type = '1603246114459107329'
+        or doc_type = '1603246134180724737'
+        or doc_type = '1603246034305957890'
+        or doc_type = '1603246056913256450'
+        or doc_type = '1603555653465210881'
+        or doc_type = '1603246085677793281'
+        <if test="query.oneType!=null and query.oneType !=''">
+            AND (t_document_info.one_type = #{query.oneType} or t_document_info.one_type =1)
+        </if>
+        <if test="query.title!=null and query.title!=''">
+            AND (t_document_info.file_code LIKE '%${query.title}%' or t_document_info.title LIKE
+            '%${query.title}%')
+        </if>
+        order by file_code asc
+    </select>
+    <select id="sortAsc" resultMap="BaseResultMap">
+        select * from t_document_info where doc_type=#{docType}  order by update_time asc limit #{current},#{size}
+    </select>
+
+    <!--一体化文件全局搜索-->
+
+</mapper>

@@ -1,0 +1,36 @@
+spring:
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/yf_doc_ky?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: yf_doc_ky
+    password: 123456
+    hikari:
+      connection-test-query: SELECT 1
+      idle-timeout: 180000
+      connection-timeout: 30000
+      maximum-pool-size: 3000
+      max-lifetime: 1800000
+      minimum-idle: 50
+
+  # Redis配置
+  redis:
+    database: 2
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 5000
+
+# 开启文档
+swagger:
+  enable: true
+
+logging:
+  level:
+    root: debug
+  path: logs/${spring.application.name}/
+
+mybatis-plus:
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射
+    map-underscore-to-camel-case: false
